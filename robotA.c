@@ -7,17 +7,20 @@
 
 //#include "vex_competition_include.c"
 
-
 void moveForward(int speed){
 	setMotor(port2, -1 * speed);
 	setMotor(port3, speed);
 	forward(speed);
+	stopMotor(port2);
+	stopMotor(port3);
 }
 
 void moveBackward(int speed){
 	setMotor(port2, -1 * speed);
 	setMotor(port3, speed);
 	forward(-1 * speed);
+	stopMotor(port2);
+	stopMotor(port3);
 }
 void right(int speed){
 	setMotor(port2, speed);
@@ -37,12 +40,14 @@ void lift(int speed){
 	stopMotor(port4);
 }
 
+// open claw
 void open(){
 	setMotor(port6, 127);
 	wait(1.5);
 	stopMotor(port6);
 }
 
+// close claw
 void close(){
 	setMotor(port6, -127);
 	wait(1.5);
@@ -54,15 +59,24 @@ task main(){
 	// port4 is to lift the claw
 	// port5 is to open and close the claw
 	int isForward = 1;
+	int speed = 10;
 	while(1==1){
 		if(vexRT[Btn8U] == 1){
-			moveForward(127);}
+			moveForward(speed);
+			if(speed <= 127){
+				speed += 1;}
+			}
 
   	if(vexRT[Btn6D] == 1){
-			stopAllMotors();}
+			stopAllMotors();
+			speed = 10;
+			}
 
 		if(vexRT[Btn8D] == 1){
-			moveBackward(-127);
+			moveBackward(-1 * speed);
+			if(speed <= 127){
+				speed += 1;
+			}
 		}
 		if(vexRT[Btn8L] == 1){
 			left(-127);
@@ -71,10 +85,10 @@ task main(){
 			right(-127);
 		}
 		if(vexRT[Btn5U] == 1){
-			lift(-117);
+			lift(-66);
 		}
 		if(vexRT[Btn5D] == 1){
-			lift(117);
+			lift(66);
 		}
 		if(vexRT[Btn7U] == 1){
 			open();
