@@ -10,14 +10,28 @@
 // claw port3
 // left ladder port4
 // right ladder port 5
-void moveForward(){
+void moveForward(int speed){
 	setMotor(port1);
 	setMotor(port2);
+	forward(speed);
+	wait(1);
+	stopMotor(port1);
+	stopMotor(port2);
+
+}
+
+void moveBackward(int speed){
+	setMotor(port1);
+	setMotor(port2);
+	forward(-1 * speed);
+	wait(1);
+	stopMotor(port1);
+	stopMotor(port2);
+
 }
 
 task main()
 {
-
 
 
 }
