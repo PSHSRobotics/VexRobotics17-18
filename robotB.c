@@ -11,30 +11,30 @@
 // left ladder port4
 // right ladder port 5
 void moveForward(int speed){
-	setMotor(port2, -1 * speed);
-	setMotor(port3, speed);
+	setMotor(port1, -1 * speed);
+	setMotor(port2, speed);
 	forward(speed);
+	stopMotor(port1);
 	stopMotor(port2);
-	stopMotor(port3);
 }
 
 void moveBackward(int speed){
-	setMotor(port2, -1 * speed);
-	setMotor(port3, speed);
+	setMotor(port1, -1 * speed);
+	setMotor(port2, speed);
 	forward(-1 * speed);
+	stopMotor(port1);
 	stopMotor(port2);
-	stopMotor(port3);
 }
 void right(int speed){
-	setMotor(port2, speed);
+	setMotor(port1, speed);
 	forward(speed);
-	stopMotor(port2);
+	stopMotor(port1);
 }
 
 void left(int speed){
-	setMotor(port3, -1 * speed);
+	setMotor(port2, -1 * speed);
 	forward(-1 * speed);
-	stopMotor(port3);
+	stopMotor(port2);
 }
 
 task main()
