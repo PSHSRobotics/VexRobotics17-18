@@ -33,6 +33,7 @@ void moveForward(int speed){
 	setMotor(port4, -1 * speed);
 	setMotor(port7, speed);
 	forward(speed);
+	forward(speed);
 	stopMotor(port4);
 	stopMotor(port7);
 }
@@ -40,6 +41,7 @@ void moveForward(int speed){
 void moveBackward(int speed){
 	setMotor(port4, -1 * speed);
 	setMotor(port7, speed);
+	forward(-1 * speed);
 	forward(-1 * speed);
 	stopMotor(port4);
 	stopMotor(port7);
@@ -58,32 +60,28 @@ void left(int speed){
 
 task main()
 {
-		int isForward = 1;
+	int isForward = 1;
 	int speed = 10;
 	while(1==1){
 		if(vexRT[Btn8U] == 1){
 			moveForward(speed);
-			if(speed <= 127){
-				speed += 1;}
-			}
+			if(speed <= 127){speed += 1;}
+		}
 
   	if(vexRT[Btn6D] == 1){
 			stopAllMotors();
 			speed = 10;
-			}
+		}
 
 		if(vexRT[Btn8D] == 1){
 			moveBackward(-1 * speed);
-			if(speed <= 127){
-				speed += 1;
-			}
+			if(speed <= 127){speed += 1;}
 		}
-		if(vexRT[Btn8L] == 1){
-			left(-127);
-		}
-		if(vexRT[Btn8R] == 1){
-			right(-127);
-		}
+		if(vexRT[Btn8L] == 1){left(-127);}
+		if(vexRT[Btn8R] == 1){right(-127);}
+		if(vexRT[Btn5U] == 1){lift(127);}
+		if(vexRT[Btn5D] == 1){stopElevator();}
+
 
 	}
 }
