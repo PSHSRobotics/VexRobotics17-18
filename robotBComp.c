@@ -87,6 +87,7 @@ void close(){
 	stopMotor(port6);
 }
 
+
 void lift(int speed){
 	setMotor(port4, -1*speed);
 	setMotor(port5, -1*speed);
@@ -100,16 +101,6 @@ void notlift(int speed){
 	setMotor(port5, speed);
 	forward(speed);
 	forward(speed);
-	stopMotor(port4);
-	stopMotor(port5);
-}
-
-void freeze(){
-	stopMotor(port2);
-	stopMotor(port3);
-}
-
-void stopElevator(){
 	stopMotor(port4);
 	stopMotor(port5);
 }
@@ -134,16 +125,38 @@ void moveBackward(int speed){
 }
 
 void right(int speed){
-	setMotor(port2, -1 * speed);
-	forward(speed);
+	setMotor(port2, speed);
+	forward(-1 * speed);
 	stopMotor(port2);
 }
 
 void left(int speed){
-	setMotor(port3, -1 * speed);
-	forward(-1 * speed);
+	setMotor(port3, speed);
+	forward(speed);
 	stopMotor(port3);
 
+}
+
+task raise(){
+	open();
+	close();
+	while(1==1){
+		if(vexRT[Btn5U] == 1){lift(127);}
+		if(vexRT[Btn5D] == 1){notlift(127);}
+	}
+
+}
+task claw(){
+	int speed = 60;
+	open();
+	close();
+	while(1==1){
+		if(vexRT[Btn5U] == 1){lift(127);}
+		if(vexRT[Btn5D] == 1){notlift(127);}
+		if(vexRT[Btn6U] == 1){open();}
+		if(vexRT[Btn6D] == 1){close();}
+
+	}
 }
 
 task drive(){
@@ -168,24 +181,13 @@ task drive(){
 	}
 }
 
-task claw(){
-	int speed = 60;
-	open();
-	close();
-	while(1==1){
-		if(vexRT[Btn5U] == 1){lift(127);}
-		if(vexRT[Btn5D] == 1){notlift(127);}
-		if(vexRT[Btn6U] == 1){open();}
-		if(vexRT[Btn6D] == 1){close();}
-
-	}
-}
 
 task usercontrol()
 {
   // User control code here, inside the loop
 	startTask(claw);
 	startTask(drive);
+	startTask(raise);
 	while(true){
 		wait();
 		UserControlCodePlaceholderForTesting();
